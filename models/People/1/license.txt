@@ -1,0 +1,11 @@
+Model Information:
+* title:	Bos Standing
+* source:	https://sketchfab.com/3d-models/bos-standing-bc644c65735e4f2bb19203a4b4ef43ee
+* author:	suasanakreasi (https://sketchfab.com/suasanakreasi)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Bos Standing" (https://sketchfab.com/3d-models/bos-standing-bc644c65735e4f2bb19203a4b4ef43ee) by suasanakreasi (https://sketchfab.com/suasanakreasi) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

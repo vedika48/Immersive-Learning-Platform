@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="style.css"> <!-- Link to external CSS -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <!-- Material Icons CDN -->
+    <style>
+        /* Full-Screen Sign-up Page Styles */
+        body, html {
+            height: 100%; /* Make sure the body and html take full height */
+            margin: 0; /* Remove default margin */
+        }
+
+        .container {
+            display: flex;
+            height: 100vh; /* Make the container full height of the viewport */
+            width: 100vw; /* Make the container full width of the viewport */
+        }
+
+        .form-section {
+            background-color: #ffffff;
+            padding: 40px;
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: left;
+            overflow-y: auto; /* Allow scrolling if content overflows */
+        }
+
+        .form-section h2 {
+            margin-bottom: 15px;
+            color: #003366; /* Dark blue */
+            font-size: 36px; /* Increased font size */
+        }
+
+        .form-section h3 {
+            color: #eae5e3;
+            margin: 1; /* Remove default margin */
+            font-size: 15px; /* Set a specific font size */
+            line-height: 1.5; /* Adjust line height */
+        }
+
+        .form-section input[type="text"],
+        .form-section input[type="email"],
+        .form-section input[type="password"] {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .form-section button {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .form-section button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Show/Hide Password Icon */
+        .show-password-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #888;
+        }
+
+        /* Separator and Or Text */
+        .separator {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .separator::before,
+        .separator::after {
+            content: '';
+            background-color: #ccc;
+            height: 1px;
+            width: 40%;
+            position: absolute;
+            top: 50%;
+        }
+
+        .separator::before {
+            left: 0;
+        }
+
+        .separator::after {
+            right: 0;
+        }
+
+        .separator span {
+            background-color: #fff;
+            padding: 0 10px;
+            color: #888;
+        }
+
+        /* Google Sign-In Button */
+        .form-section .google-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffffff; /* Change to white */
+            color: #000000; /* Text color to match the Google logo */
+            border: 1px solid #000000; /* Add a border to match */
+            margin-top: 10px;
+            padding: 15px;
+            width: 100%;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .form-section .google-btn i {
+            margin-right: 10px; /* Space between icon and text */
+            font-size: 20px; /* Adjust size of the icon */
+        }
+
+        .form-section .google-btn:hover {
+            background-color: #f1f1f1; /* Slightly darker on hover */
+            color: #000000; /* Keep the text color */
+        }
+
+        .form-section .login-link {
+            margin-top: 15px;
+            text-align: center;
+            display: block;
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .form-section .login-link:hover {
+            text-decoration: underline;
+        }
+
+        .image-section {
+            background-color: #663399;
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0; /* No padding */
+        }
+
+        .image-section img {
+            width: 100%; /* Ensure image occupies entire width */
+            height: 100%; /* Ensure image occupies entire height */
+            object-fit: cover; /* Maintain aspect ratio */
+            border-radius: 0; /* Remove rounding for image */
+        }
+
+        /* Alert message */
+        .alert {
+            color: red;
+            margin-top: -10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            display: none; /* Hidden by default */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="form-section">
+            <h2>Welcome!</h2>
+            <h3>Sign-up to track your process and get more access to your learning experience.</h3>
+            <form id="signup-form">
+                <input type="text" id="name" placeholder="Full Name" required>
+                <input type="email" id="email" placeholder="Email" required>
+                <div style="position: relative;">
+                    <input type="password" id="password" placeholder="Password" required>
+                    <span class="show-password-icon" id="togglePassword" onclick="togglePasswordVisibility('password')">
+                        <i class="material-icons">visibility</i>
+                    </span>
+                </div>
+                <div style="position: relative;">
+                    <input type="password" id="confirm-password" placeholder="Confirm Password" required>
+                    <span class="show-password-icon" id="toggleConfirmPassword" onclick="togglePasswordVisibility('confirm-password')">
+                        <i class="material-icons">visibility</i>
+                    </span>
+                </div>
+                <div class="alert" id="password-alert">Password must be at least 8 characters long and include 1 uppercase letter, 1 lowercase letter, and 1 special character.</div>
+                <button type="submit">Sign Up</button>
+            </form>
+
+            <!-- Separator with 'or sign up with' -->
+            <div class="separator">
+                <span>or sign up with</span>
+            </div>
+
+            <!-- Google Sign-In Button -->
+            <button class="google-btn" id="google-signin-btn" onclick="signInWithGoogle()">
+                <i class="material-icons">g</i> <!-- Google 'G' Icon -->
+                Sign Up with Google
+            </button>
+
+            <a href="index.html" class="login-link">Already have an account? Log in</a>
+        </div>
+        <div class="image-section">
+            <img src="img.webp" alt="Welcome Image"> <!-- Replace with your image path -->
+        </div>
+    </div>
+
+    <!-- Load Google's Platform Library -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script>
+        function initGoogleAuth() {
+            gapi.load('auth2', function() {
+                gapi.auth2.init({
+                    client_id: '116159098616-b62drahrlg7nu2uhvk9ovalb8rrct457.apps.googleusercontent.com', // Replace with your client ID
+                });
+            });
+        }
+
+        function signInWithGoogle() {
+            const auth2 = gapi.auth2.getAuthInstance();
+            auth2.signIn().then(function(googleUser) {
+                const profile = googleUser.getBasicProfile();
+                console.log('ID: ' + profile.getId()); // Don't send this directly to the server!
+                console.log('Full Name: ' + profile.getName());
+                console.log('Email: ' + profile.getEmail());
+        
+                alert('Google Sign-Up Successful! Welcome ' + profile.getName());
+                // Here you can handle further processing, like sending data to your server
+                // For example: window.location.href = 'welcome.html'; // Redirect to welcome page
+            }).catch(function(error) {
+                console.error("Error signing in: ", error); 
+                if (error.message) {
+                    alert('Google Sign-In failed: ' + error.message); 
+                } else {
+                    alert('Google Sign-In failed! Please try again.'); 
+                }
+            });
+        }
+        
+
+        function togglePasswordVisibility(fieldId) {
+            const passwordField = document.getElementById(fieldId);
+            const passwordType = passwordField.type === "password" ? "text" : "password";
+            passwordField.type = passwordType;
+
+            const icon = passwordType === "text" ? 'visibility_off' : 'visibility';
+            document.getElementById('toggle' + fieldId.charAt(0).toUpperCase() + fieldId.slice(1)).innerHTML = `<i class="material-icons">${icon}</i>`;
+        }
+
+        // Handle manual signup form submission
+        document.getElementById('signup-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            // Simple password validation
+            if (password.length < 8 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/[!@#$%^&*]/.test(password)) {
+                document.getElementById('password-alert').style.display = 'block'; // Show alert
+                return; // Exit function if validation fails
+            } else {
+                document.getElementById('password-alert').style.display = 'none'; // Hide alert
+            }
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+                return;
+            }
+
+            // Add code to send the name, email, and password to your backend here
+            alert("Sign Up Successful!");
+            // Redirect or perform other actions after successful sign up
+        });
+
+        // Initialize Google Auth on page load
+        window.onload = function() {
+            initGoogleAuth();
+        };
+    </script>
+</body>
+</html>
