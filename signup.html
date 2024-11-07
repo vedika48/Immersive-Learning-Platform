@@ -223,7 +223,7 @@
         function initGoogleAuth() {
             gapi.load('auth2', function() {
                 gapi.auth2.init({
-                    client_id: '116159098616-b62drahrlg7nu2uhvk9ovalb8rrct457.apps.googleusercontent.com', // Replace with your client ID
+                    client_id: '116159098616-b62drahrlg7nu2uhvk9ovalb8rrct457.apps.googleusercontent.com', // Replace with your actual client ID
                 });
             });
         }
@@ -232,13 +232,12 @@
             const auth2 = gapi.auth2.getAuthInstance();
             auth2.signIn().then(function(googleUser) {
                 const profile = googleUser.getBasicProfile();
-                console.log('ID: ' + profile.getId()); // Don't send this directly to the server!
+                console.log('ID: ' + profile.getId());
                 console.log('Full Name: ' + profile.getName());
                 console.log('Email: ' + profile.getEmail());
-        
+
                 alert('Google Sign-Up Successful! Welcome ' + profile.getName());
-                // Here you can handle further processing, like sending data to your server
-                // For example: window.location.href = 'welcome.html'; // Redirect to welcome page
+                // Handle further processing if needed
             }).catch(function(error) {
                 console.error("Error signing in: ", error); 
                 if (error.message) {

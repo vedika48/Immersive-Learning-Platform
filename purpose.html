@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purpose</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            margin-top: 40px;
+            font-size: 1.8em;
+            color: #333;
+        }
+        p {
+            color: #666;
+            font-size: 1em;
+            margin-top: 10px;
+        }
+        .purpose-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px; /* Gap between items */
+            width: 100%; /* Full width to allow centering */
+            max-width: 600px; /* Controls the width on large screens */
+            margin: 20px auto;
+        }
+        .purpose-option {
+            width: 150px;
+            height: 150px;
+            background-color: #fff;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .purpose-option:hover {
+            background-color: #f0efef;
+            transform: scale(1.15);
+        }
+        .purpose-option.selected {
+            background-color: #e1ebf5;
+            border-color: #357ABD;
+        }
+        .purpose-option img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 10px;
+        }
+        .purpose-option span {
+            font-size: 1em;
+            color: inherit;
+        }
+        .continue-button {
+            background-color: #4a90e2;
+            color: white;
+            font-size: 1.5em;
+            padding: 10px 30px;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        .continue-button:hover {
+            background-color: #357ABD;
+        }
+    </style>
+</head>
+<body>
+
+<h1 id="language-title">Hi, why are you learning [Language]?</h1>
+<p>Help us tailor your learning experience.</p>
+
+<div class="purpose-container">
+    <div class="purpose-option" onclick="selectPurpose(this)">
+        <img src="icons/work.png" alt="Work Icon">
+        <span>Work</span>
+    </div>
+    <div class="purpose-option" onclick="selectPurpose(this)">
+        <img src="icons/school.png" alt="School Icon">
+        <span>School</span>
+    </div>
+    <div class="purpose-option" onclick="selectPurpose(this)">
+        <img src="icons/travel.png" alt="Travel Icon">
+        <span>Travel</span>
+    </div>
+    <div class="purpose-option" onclick="selectPurpose(this)">
+        <img src="icons/culture.png" alt="Culture Icon">
+        <span>Culture</span>
+    </div>
+    <div class="purpose-option" onclick="selectPurpose(this)">
+        <img src="icons/fun.png" alt="Fun Icon">
+        <span>Fun</span>
+    </div>
+    <div class="purpose-option" onclick="selectPurpose(this)">
+        <img src="icons/other.png" alt="Other Icon">
+        <span>Other</span>
+    </div>
+</div>
+
+<button class="continue-button" onclick="goToGoalPage()">Continue</button>
+
+<script>
+    let selectedPurpose = null;
+
+    function selectPurpose(element) {
+        // Remove 'selected' class from all containers
+        const options = document.querySelectorAll('.purpose-option');
+        options.forEach(option => option.classList.remove('selected'));
+
+        // Add 'selected' class to the clicked container
+        selectedPurpose = element;
+        selectedPurpose.classList.add('selected');
+    }
+
+    function goToGoalPage() {
+        if (selectedPurpose) {
+            // Redirect to goal.html if an option is selected
+            window.location.href = "goal.html";
+        } else {
+            alert("Please select a purpose before continuing.");
+        }
+    }
+
+    // Retrieve the language from the URL and display it in the title
+    const urlParams = new URLSearchParams(window.location.search);
+    const language = urlParams.get('language');
+    document.getElementById('language-title').textContent = `Hi, why are you learning ${language ? language.charAt(0).toUpperCase() + language.slice(1) : '[Language]'}?`;
+</script>
+
+</body>
+</html>

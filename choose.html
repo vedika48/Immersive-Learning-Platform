@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Language</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+        h1 {
+            margin-top: 40px;
+            font-size: 2em;
+            color: #333;
+        }
+        .language-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            padding: 50px;
+        }
+        .language-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 150px;
+            height: 170px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: transform 0.2s;
+            text-decoration: none;
+            color: inherit;
+        }
+        .language-card:hover {
+            transform: scale(1.15);
+        }
+        .language-card img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 10px;
+        }
+        .language-card h2 {
+            font-size: 1.4em;
+            margin: 5px;
+            color: #333;
+        }
+        .language-card p {
+            font-size: 0.6em;
+            color: #888;
+            margin-top: 5px;
+        }
+        /* Ensure 4 cards per row on larger screens */
+        @media (min-width: 800px) {
+            .language-container {
+                max-width: 800px;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h1>What would you like to learn?</h1>
+
+<div class="language-container">
+    <a href="purpose.html?language=sanskrit" class="language-card">
+        <img src="flags/sanskrit.png" alt="Sanskrit Flag">
+        <h2>Sanskrit</h2>
+        <p>26M LEARNERS</p>
+    </a>
+    <a href="purpose.html?language=spanish" class="language-card">
+        <img src="flags/spanish.png" alt="Spanish Flag">
+        <h2>Spanish</h2>
+        <p>5M LEARNERS</p>
+    </a>
+    <a href="purpose.html?language=japanese" class="language-card">
+        <img src="flags/japanese.png" alt="Japanese Flag">
+        <h2>Japanese</h2>
+        <p>4M LEARNERS</p>
+    </a>
+    <a href="purpose.html?language=french" class="language-card">
+        <img src="flags/french.png" alt="French Flag">
+        <h2>French</h2>
+        <p>5M LEARNERS</p>
+    </a>
+    <a href="purpose.html?language=german" class="language-card">
+        <img src="flags/german.png" alt="German Flag">
+        <h2>German</h2>
+        <p>4M LEARNERS</p>
+    </a>
+    <a href="purpose.html?language=korean" class="language-card">
+        <img src="flags/korean.png" alt="Korean Flag">
+        <h2>Korean</h2>
+        <p>100K LEARNERS</p>
+    </a>
+    <a href="purpose.html?language=italian" class="language-card">
+        <img src="flags/italian.png" alt="Italian Flag">
+        <h2>Italian</h2>
+        <p>2M LEARNERS</p>
+    </a>
+    <a href="purpose.html?language=arabic" class="language-card">
+        <img src="flags/arabic.png" alt="Arabic Flag">
+        <h2>Arabic</h2>
+        <p>1M LEARNERS</p>
+    </a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Daily Study Goal</title>
+    <script type="module" src="script.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #333;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-top: 50px;
+        }
+        p {
+            font-size: 1em;
+            color: #b6b5b5;
+            margin-bottom: 50px;
+            margin-top: 0;
+        }
+        .goal-container {
+            display: flex;
+            flex-direction: column;
+            width: 400px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            background-color: #fff;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .goal-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: background-color 1s;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .goal-option:last-child {
+            border-bottom: none;
+        }
+        .goal-option:hover {
+            background-color: #f0f0f0;
+            transform: scale(1.05);
+        }
+        .goal-option.selected {
+            background-color: #e1ebf5;
+            border-color: #357ABD;
+        }
+        .goal-time {
+            font-size: 1em;
+        }
+        .goal-type{
+            font-size: 0.8em;
+            color: #a7a6a6;
+        }
+        .commit-button {
+            background-color: #4a90e2;
+            color: white;
+            font-size: 1.4em;
+            padding: 10px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        .commit-button:hover {
+            background-color: #e1ebf5;
+        }
+        .tip {
+            font-size: 0.9em;
+            color: #888;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Set a daily study goal</h1>
+<p>Create a learning habit to improve your language skills.</p>
+
+<div class="goal-container">
+    <div class="goal-option" onclick="selectGoal(this)">
+        <span class="goal-time">5 minutes / day</span>
+        <span class="goal-type">Casual</span>
+    </div>
+    <div class="goal-option" onclick="selectGoal(this)">
+        <span class="goal-time">10 minutes / day</span>
+        <span class="goal-type">Regular</span>
+    </div>
+    <div class="goal-option" onclick="selectGoal(this)">
+        <span class="goal-time">15 minutes / day</span>
+        <span class="goal-type">Serious</span>
+    </div>
+    <div class="goal-option" onclick="selectGoal(this)">
+        <span class="goal-time">25 minutes / day</span>
+        <span class="goal-type">Intense</span>
+    </div>
+</div>
+
+<p class="tip">Tip: You can change your goal at any time.</p>
+<button class="commit-button" onclick="commitGoal()">Commit</button>
+
+<script>
+    let selectedGoal = null;
+
+    function selectGoal(element) {
+        // Remove 'selected' class from all options
+        const options = document.querySelectorAll('.goal-option');
+        options.forEach(option => option.classList.remove('selected'));
+
+        // Set the clicked option as selected
+        selectedGoal = element;
+        selectedGoal.classList.add('selected');
+    }
+
+    function commitGoal() {
+        if (selectedGoal) {
+            alert("goaal selected");
+            redirectToNextPage();
+        } else {
+            alert("Please select a goal before committing.");
+        }
+    }
+
+    function redirectToNextPage() {
+        if (typeof startLearning === 'function') {
+            startLearning();
+        }
+    }
+</script>
+
+</body>
+</html>

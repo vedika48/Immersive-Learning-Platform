@@ -31,8 +31,7 @@ function animate() {
 }
 
 // Event listeners
-document.getElementById('start-button').addEventListener('click', startLearning);
-
+document.getElementById('commit-button').addEventListener('click', startLearning);
 
 // Start learning function
 async function startLearning() {

@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="style.css">
     <script type="module" src="three.module.js"></script>
     <script src="https://unpkg.com/papaparse@5.3.2/papaparse.min.js"></script>
-
-    <script type="module" src="script.js"></script>
 </head>
 <body>
     <header id="navbar">
@@ -27,8 +25,8 @@
     <main>
         <div id="wordContainer"></div>
 
-        <div id="startScreen" class="active">
-        </div>
+        <div id="startScreen" class="active"></div>
+        
         <section id="hero">
             <div class="hero-content">
                 <h1>Learn Languages in VR/AR</h1>
@@ -48,18 +46,24 @@
         </div>
         <div id="progress-bar-container" style="display: none;">
             <div id="progress-bar" style="width: 0%; height: 20px; background-color: green;"></div>
-          </div>  
+        </div>  
           
-          <button id="skip-button" style="position: absolute; bottom: 20px; right: 20px; display: none;">
+        <button id="skip-button" style="position: absolute; bottom: 20px; right: 20px; display: none;">
             Skip
         </button>
         <button id="speakButton">Speak</button>
         <button id="submitButton" style="display: none;">Submit</button>
-
     </main>
 
     <footer id="footer">
         <p>© 2024 Immersive Language Learning</p>
     </footer>
+
+    <script>
+        // Redirect to choose.html when Get Started is clicked
+        document.getElementById("start-button").addEventListener("click", function() {
+            window.location.href = "choose.html";
+        });
+    </script>
 </body>
 </html>
