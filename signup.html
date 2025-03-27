@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #A7D2E0;
+        }
+        .container {
+            display: flex;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            width: 900px;
+        }
+        .left-section {
+            width: 50%;
+            background: #dcd3ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .left-section img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+        .right-section {
+            width: 50%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            justify-content: center;
+        }
+        .logo {
+            display: block;
+            margin-bottom: 10px;
+            width: 250px;
+            height: auto;
+        }
+        h2 {
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .input-group {
+            width: 100%;
+            margin: 10px 0;
+        }
+        .input-group label {
+            display: block;
+            font-weight: bold;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .error-message {
+            color: red;
+            font-size: 12px;
+            display: none;
+        }
+        .sign-up {
+            width: 100%;
+            background: #4a69ff;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .already-account {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .already-account a {
+            color: blue;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Image Section -->
+        <div class="left-section">
+            <img src="/assets/sign-up.png" alt="Signup Illustration">
+        </div>
+
+        <!-- Right Signup Form -->
+        <div class="right-section">
+            <img src="/assets/logo.png" alt="Logo" class="logo">
+            <h2>Create an Account</h2>
+            
+            <div class="input-group">
+                <label>Full Name</label>
+                <input type="text" id="full-name" placeholder="Enter your full name">
+            </div>
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" id="email" placeholder="Enter your email">
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="password" placeholder="Enter your password">
+            </div>
+            <div class="input-group">
+                <label>Confirm Password</label>
+                <input type="password" id="confirm-password" placeholder="Confirm your password">
+                <p class="error-message" id="error-message">Passwords do not match!</p>
+            </div>
+            <button class="sign-up">Sign Up</button>
+            <p class="already-account">Already have an account? <a href="login.html">Log In</a></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const signupButton = document.querySelector(".sign-up");
+
+            signupButton.addEventListener("click", async () => {
+                const name = document.querySelector("#full-name").value;
+                const email = document.querySelector("#email").value;
+                const password = document.querySelector("#password").value;
+                const confirmPassword = document.querySelector("#confirm-password").value;
+                const errorMessage = document.getElementById("error-message");
+
+                // Password Validation
+                if (password !== confirmPassword) {
+                    errorMessage.style.display = "block";
+                    return;
+                } else {
+                    errorMessage.style.display = "none";
+                }
+
+                try {
+                    const response = await fetch("http://localhost:5500/signup", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ name, email, password }),
+                    });
+
+                    const data = await response.json();
+                    alert(data.message || data.error);
+                } catch (error) {
+                    alert("❌ Error signing up. Please try again.");
+                    console.error(error);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

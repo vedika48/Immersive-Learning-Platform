@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #A7D2E0;
+        }
+        .container {
+            display: flex;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            width: 800px;
+        }
+        .left-section {
+            padding: 40px;
+            width: 50%;
+        }
+        .right-section {
+            background: #dcd3ff;
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .right-section img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+        h2 {
+            margin-bottom: 10px;
+        }
+        .input-group {
+            margin: 10px 0;
+        }
+        .input-group label {
+            display: block;
+            font-weight: bold;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .forgot-password {
+            text-align: right;
+            font-size: 12px;
+            color: blue;
+            cursor: pointer;
+        }
+        .log-in {
+            width: 100%;
+            background: #4a69ff;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .or-section {
+            text-align: center;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .google-login {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            background: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .google-login img {
+            width: 20px; /* Adjust size */
+            height: 20px;
+            margin-right: 10px;
+        }
+        .sign-up {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .sign-up a {
+            color: blue;
+            text-decoration: none;
+        }
+        .logo {
+            display: block;
+            margin: 0 0 10px;  /* Center it and add spacing below */
+            width: 250px;  /* Adjust the size as needed */
+            height: auto;
+        }        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-section">
+            <img src="/assets/logo.png" alt="Logo" class="logo">
+            <h2>Welcome Back!</h2>
+            <p>Start your learning journey with us!</p>        
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" placeholder="Enter the email">
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" placeholder="Enter the Password">
+            </div>
+            <p class="forgot-password">Forgot password?</p>
+            <button class="log-in">Log In</button>
+            <p class="or-section">OR</p>
+            <div class="google-login">
+                <img src="/assets/googlelogo.png" alt="Google Logo">
+                Log in with Google
+            </div>                                   
+            <p class="sign-up">Don’t have an account? <a href="signup.html">Sign Up</a></p>
+        </div>
+        <div class="right-section">
+            <img src="/assets/login-image.jpg" alt="Login Illustration">
+        </div>
+    </div>
+</body>
+</html>
