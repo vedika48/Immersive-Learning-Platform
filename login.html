@@ -6,202 +6,6 @@
     <title>Login - Immersive Learning</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <style>
-        .auth-container {
-            max-width: 500px;
-            margin: 80px auto;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            background-color: #fff;
-        }
-
-        .auth-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .auth-header img {
-            height: 60px;
-            margin-bottom: 20px;
-        }
-
-        .auth-header h1 {
-            font-size: 28px;
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        .auth-header p {
-            color: #666;
-            font-size: 16px;
-        }
-
-        .auth-form .form-group {
-            margin-bottom: 20px;
-        }
-
-        .auth-form label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #333;
-        }
-
-        .auth-form input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-
-        .auth-form input:focus {
-            border-color: #4a90e2;
-            outline: none;
-        }
-
-        .auth-form button {
-            width: 100%;
-            padding: 14px;
-            background-color: #4a90e2;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .auth-form button:hover {
-            background-color: #3a7bd5;
-        }
-
-        .auth-form button:disabled {
-            background-color: #a0c0e8;
-            cursor: not-allowed;
-        }
-
-        .auth-footer {
-            text-align: center;
-            margin-top: 25px;
-            font-size: 15px;
-            color: #666;
-        }
-
-        .auth-footer a {
-            color: #4a90e2;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .auth-footer a:hover {
-            text-decoration: underline;
-        }
-
-        .auth-social {
-            margin-top: 30px;
-            text-align: center;
-        }
-
-        .auth-social p {
-            margin-bottom: 15px;
-            position: relative;
-        }
-
-        .auth-social p:before,
-        .auth-social p:after {
-            content: "";
-            display: inline-block;
-            width: 40%;
-            height: 1px;
-            background: #ddd;
-            vertical-align: middle;
-            margin: 0 10px;
-        }
-
-        .social-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        .social-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: #f5f5f5;
-            color: #333;
-            transition: background-color 0.3s, transform 0.3s;
-        }
-
-        .social-button:hover {
-            transform: translateY(-3px);
-        }
-
-        .social-button i {
-            font-size: 20px;
-        }
-
-        .social-button.google {
-            color: #DB4437;
-        }
-
-        .social-button.facebook {
-            color: #4267B2;
-        }
-
-        .social-button.apple {
-            color: #000;
-        }
-
-        .back-to-home {
-            display: inline-block;
-            margin-top: 20px;
-            color: #666;
-            text-decoration: none;
-        }
-
-        .back-to-home i {
-            margin-right: 5px;
-        }
-
-        .forgot-password {
-            display: block;
-            text-align: right;
-            margin-top: 8px;
-            color: #4a90e2;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .forgot-password:hover {
-            text-decoration: underline;
-        }
-
-        .error-message {
-            color: #e74c3c;
-            font-size: 14px;
-            margin-top: 5px;
-            display: none;
-        }
-
-        .success-message {
-            color: #27ae60;
-            font-size: 14px;
-            margin-top: 5px;
-            display: none;
-            text-align: center;
-            padding: 10px;
-            background-color: #ebfaf0;
-            border-radius: 5px;
-        }
-    </style>
 </head>
 <body>
     <header class="navbar">
@@ -230,7 +34,6 @@
     <main>
         <div class="auth-container">
             <div class="auth-header">
-                <img src="/assets/logo.png" alt="Immersive Learning Logo">
                 <h1>Welcome Back</h1>
                 <p>Sign in to continue your learning journey</p>
             </div>
@@ -259,7 +62,7 @@
             <div class="auth-social">
                 <p>Or continue with</p>
                 <div class="social-buttons">
-                    <a href="#" class="social-button google">
+                    <a href="#" class="social-button google" id="google-btn">
                         <i class="fab fa-google"></i>
                     </a>
                     <a href="#" class="social-button facebook">
@@ -269,6 +72,22 @@
                         <i class="fab fa-apple"></i>
                     </a>
                 </div>
+            </div>
+
+            <!-- Google Sign-In button -->
+            <div class="google-btn" id="g_id_onload"
+                data-client_id="1073654161497-84namohqcih0hsgbrffiuti0j6f8sfan.apps.googleusercontent.com"
+                data-context="signin"
+                data-callback="handleGoogleSignIn"
+                data-auto_prompt="false">
+            </div>
+            <div class="g_id_signin"
+                data-type="standard"
+                data-size="large"
+                data-theme="outline"
+                data-text="sign_in_with"
+                data-shape="rectangular"
+                data-logo_alignment="center">
             </div>
 
             <div class="auth-footer">
@@ -288,7 +107,67 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js"></script>
     <script>
-        // Form validation and submission
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add event listener for the Google button
+            const googleButton = document.getElementById('google-btn');
+            if (googleButton) {
+                googleButton.addEventListener('click', function() {
+                    console.log('Google sign-in button clicked!');
+                    // Trigger the Google sign-in flow
+                    if (window.google && google.accounts && google.accounts.id) {
+                        google.accounts.id.prompt();
+                    } else {
+                        console.error('Google Sign-In API not loaded properly');
+                    }
+                });
+            } else {
+                console.error("Element with ID 'google-btn' not found.");
+            }
+        });
+
+        // Function to handle Google Sign-In
+        function handleGoogleSignIn(response) {
+            // Get the ID token from the response
+            const idToken = response.credential;
+            
+            // Disable form during submission
+            document.getElementById('submit-button').disabled = true;
+            
+            // Call your backend to verify the Google token
+            axios.post('/api/auth/google', { idToken })
+                .then(response => {
+                    // Store the JWT token from your server
+                    localStorage.setItem('authToken', response.data.token);
+                    
+                    // Store user data if needed
+                    if (response.data.user) {
+                        localStorage.setItem('userData', JSON.stringify(response.data.user));
+                    }
+                    
+                    // Show success message
+                    document.getElementById('success-message').style.display = 'block';
+                    document.getElementById('login-form').style.display = 'none';
+                    
+                    // Redirect to main page after a delay
+                    setTimeout(() => {
+                        window.location.href = 'main.html';
+                    }, 2000);
+                })
+                .catch(error => {
+                    console.error('Google login error:', error);
+                    
+                    // Show appropriate error message
+                    document.getElementById('email-error').textContent = 
+                        error.response?.data?.message || 'Google authentication failed';
+                    document.getElementById('email-error').style.display = 'block';
+                })
+                .finally(() => {
+                    // Re-enable button
+                    document.getElementById('submit-button').disabled = false;
+                });
+        }
+        
+        // Form validation and submission for regular email/password login
         document.getElementById('login-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -328,91 +207,59 @@
                 submitButton.textContent = 'Logging in...';
                 
                 try {
-                    // Here we would normally make an API call to the server
-                    // For demonstration, we're simulating a server request with setTimeout
-                    setTimeout(async () => {
-                        try {
-                            // This is where you would make the actual API call to your MongoDB backend
-                            // Example with axios:
-                            /*
-                            const response = await axios.post('/api/users/login', {
-                                email,
-                                password
-                            });
-                            
-                            // Get the user data from the response
-                            const userData = response.data.user;
-                            */
-                            
-                            // For demonstration, check if we have this user in localStorage
-                            // In a real app, this authentication would happen on the server
-                            const storedUser = localStorage.getItem('user');
-                            if (storedUser) {
-                                const userData = JSON.parse(storedUser);
-                                
-                                // In a real app, you'd compare hashed passwords on the server
-                                // This is just for demo purposes
-                                if (userData.email === email) {
-                                    // Show success message
-                                    document.getElementById('success-message').style.display = 'block';
-                                    document.getElementById('login-form').style.display = 'none';
-                                    
-                                    // Redirect to main page after a delay
-                                    setTimeout(() => {
-                                        window.location.href = 'main.html';
-                                    }, 2000);
-                                } else {
-                                    // Invalid credentials
-                                    document.getElementById('email-error').textContent = 'Invalid email or password';
-                                    document.getElementById('email-error').style.display = 'block';
-                                }
-                            } else {
-                                // User not found - for demo create a fake user first time
-                                if (email && password) {
-                                    // Create a demo user for testing
-                                    const demoUser = {
-                                        firstName: 'Demo',
-                                        lastName: 'User',
-                                        email: email,
-                                        interests: 'languages'
-                                    };
-                                    
-                                    localStorage.setItem('user', JSON.stringify(demoUser));
-                                    
-                                    // Show success message
-                                    document.getElementById('success-message').style.display = 'block';
-                                    document.getElementById('login-form').style.display = 'none';
-                                    
-                                    // Redirect to main page after a delay
-                                    setTimeout(() => {
-                                        window.location.href = 'main.html';
-                                    }, 2000);
-                                } else {
-                                    document.getElementById('email-error').textContent = 'Invalid email or password';
-                                    document.getElementById('email-error').style.display = 'block';
-                                }
-                            }
-                            
-                        } catch (error) {
-                            // Handle server error
-                            console.error('Login error:', error);
-                            
-                            // Show appropriate error message
-                            if (error.response && error.response.data && error.response.data.message) {
+                    // Make API call to the backend server that connects to MongoDB
+                    try {
+                        // Send login credentials to server for MongoDB authentication
+                        const response = await axios.post('/api/auth/login', {
+                            email,
+                            password
+                        });
+                        
+                        // If we reach here, login was successful
+                        // Store the JWT token from the response
+                        const token = response.data.token;
+                        localStorage.setItem('authToken', token);
+                        
+                        // Store user data if needed
+                        if (response.data.user) {
+                            localStorage.setItem('userData', JSON.stringify(response.data.user));
+                        }
+                        
+                        // Show success message
+                        document.getElementById('success-message').style.display = 'block';
+                        document.getElementById('login-form').style.display = 'none';
+                        
+                        // Redirect to main page after a delay
+                        setTimeout(() => {
+                            window.location.href = 'main.html';
+                        }, 2000);
+                    } catch (error) {
+                        // Handle authentication errors
+                        console.error('Login error:', error);
+                        
+                        // Show appropriate error message from the server
+                        if (error.response && error.response.data) {
+                            // Handle specific error codes from the backend
+                            if (error.response.status === 401) {
+                                document.getElementById('email-error').textContent = 'Invalid email or password';
+                                document.getElementById('email-error').style.display = 'block';
+                            } else if (error.response.data.message) {
                                 document.getElementById('email-error').textContent = error.response.data.message;
                                 document.getElementById('email-error').style.display = 'block';
                             } else {
-                                // Generic error
-                                document.getElementById('email-error').textContent = 'An error occurred. Please try again.';
+                                document.getElementById('email-error').textContent = 'Authentication failed';
                                 document.getElementById('email-error').style.display = 'block';
                             }
-                        } finally {
-                            // Re-enable button
-                            submitButton.disabled = false;
-                            submitButton.textContent = 'Log In';
+                        } else {
+                            // Network error or server down
+                            document.getElementById('email-error').textContent = 'Cannot connect to server. Please try again later.';
+                            document.getElementById('email-error').style.display = 'block';
                         }
-                    }, 1500); // Simulate server delay
-                    
+                    } finally {
+                        // Re-enable button
+                        submitButton.disabled = false;
+                        submitButton.textContent = 'Log In';
+                    }
                 } catch (error) {
                     console.error('Unexpected error:', error);
                     // Re-enable button

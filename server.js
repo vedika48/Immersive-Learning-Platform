@@ -1,223 +1,264 @@
-// server.js
+// server.js - Express server with MongoDB and Google authentication
 const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const cors = require('cors');
 const jwt = require('jsonwebtoken');
-const path = require('path');
+const cors = require('cors');
+const { OAuth2Client } = require('google-auth-library');
+require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'; // Use environment variable in production
+
+// Initialize Google OAuth client
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 // Middleware
-app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
+app.use(express.static('public'));
 
-// MongoDB Connection
-mongoose.connect('mongodb://localhost:27017/immersiveLearning', {
+// Connect to MongoDB
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/immersivelearning', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.error('MongoDB connection error:', err));
 
-// User Schema
+// User Schema and Model
 const userSchema = new mongoose.Schema({
-    firstName: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    lastName: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-        trim: true,
-        lowercase: true
-    },
-    password: {
-        type: String,
-        required: true,
-        minlength: 8
-    },
-    interests: {
-        type: String,
-        required: true,
-        enum: ['languages', 'science', 'social', 'arts', 'professional']
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    }
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String }, // Password is optional for social logins
+    googleId: { type: String }, // Google ID for Google authentication
+    picture: { type: String }, // Profile picture URL
+    interests: { type: String },
+    authProvider: { type: String, default: 'local' }, // 'local', 'google', etc.
+    createdAt: { type: Date, default: Date.now }
 });
 
-// Hash password before saving
-userSchema.pre('save', async function(next) {
-    if (!this.isModified('password')) return next();
-    
-    try {
-        const salt = await bcrypt.genSalt(10);
-        this.password = await bcrypt.hash(this.password, salt);
-        next();
-    } catch (error) {
-        next(error);
-    }
-});
-
-// Model
 const User = mongoose.model('User', userSchema);
 
-// Authentication Middleware
-const auth = async (req, res, next) => {
+// Regular Email/Password Login
+app.post('/api/auth/login', async (req, res) => {
     try {
-        const token = req.header('Authorization').replace('Bearer ', '');
-        const decoded = jwt.verify(token, JWT_SECRET);
-        const user = await User.findById(decoded.id);
-        
-        if (!user) {
-            throw new Error();
+        const { email, password } = req.body;
+
+        // Validate input
+        if (!email || !password) {
+            return res.status(400).json({ message: 'Email and password are required' });
         }
+
+        // Find user by email
+        const user = await User.findOne({ email });
         
-        req.token = token;
-        req.user = user;
-        next();
-    } catch (error) {
-        res.status(401).send({ message: 'Please authenticate' });
-    }
-};
+        // Check if user exists
+        if (!user) {
+            return res.status(401).json({ message: 'Invalid email or password' });
+        }
 
-// Routes
-
-// Register User
-app.post('/api/users/signup', async (req, res) => {
-    try {
-        // Check if user already exists
-        const existingUser = await User.findOne({ email: req.body.email });
-        if (existingUser) {
+        // Check if this is a social login account
+        if (user.authProvider !== 'local') {
             return res.status(400).json({ 
-                field: 'email',
-                message: 'Email is already registered' 
+                message: `This account uses ${user.authProvider} authentication. Please sign in with ${user.authProvider}.` 
             });
         }
+
+        // Compare passwords
+        const isMatch = await bcrypt.compare(password, user.password);
         
-        // Create new user
-        const user = new User({
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            email: req.body.email,
-            password: req.body.password,
-            interests: req.body.interests
-        });
-        
-        // Save user to database
-        await user.save();
-        
-        // Generate JWT token
-        const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '24h' });
-        
-        // Return user data without password
-        const userData = {
-            id: user._id,
+        if (!isMatch) {
+            return res.status(401).json({ message: 'Invalid email or password' });
+        }
+
+        // Create JWT token
+        const token = jwt.sign(
+            { userId: user._id },
+            process.env.JWT_SECRET || 'your_jwt_secret',
+            { expiresIn: '1d' }
+        );
+
+        // Send response with token and user info (excluding password)
+        const userResponse = {
+            _id: user._id,
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
-            interests: user.interests
+            picture: user.picture,
+            interests: user.interests,
+            authProvider: user.authProvider
+        };
+
+        res.json({ token, user: userResponse });
+        
+    } catch (error) {
+        console.error('Login error:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+// Google Authentication
+app.post('/api/auth/google', async (req, res) => {
+    try {
+        const { idToken } = req.body;
+        
+        // Verify the Google ID token
+        const ticket = await googleClient.verifyIdToken({
+            idToken,
+            audience: process.env.GOOGLE_CLIENT_ID
+        });
+        
+        // Get user info from the token
+        const payload = ticket.getPayload();
+        const { sub: googleId, email, given_name, family_name, picture } = payload;
+        
+        // Check if user already exists
+        let user = await User.findOne({ googleId });
+        
+        if (!user) {
+            // Check if user exists with the same email
+            user = await User.findOne({ email });
+            
+            if (user) {
+                // If user exists with email but not googleId, update the user with googleId
+                if (user.authProvider === 'local') {
+                    // User previously registered with email/password
+                    return res.status(400).json({ 
+                        message: 'An account with this email already exists. Please log in with your password.' 
+                    });
+                } else {
+                    // Update user with Google ID
+                    user.googleId = googleId;
+                    await user.save();
+                }
+            } else {
+                // Create new user with Google info
+                user = new User({
+                    firstName: given_name,
+                    lastName: family_name,
+                    email,
+                    googleId,
+                    picture,
+                    authProvider: 'google'
+                });
+                
+                await user.save();
+            }
+        }
+        
+        // Create JWT token
+        const token = jwt.sign(
+            { userId: user._id },
+            process.env.JWT_SECRET || 'your_jwt_secret',
+            { expiresIn: '1d' }
+        );
+        
+        // User data to return
+        const userResponse = {
+            _id: user._id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            picture: user.picture,
+            interests: user.interests,
+            authProvider: 'google'
         };
         
+        res.json({ token, user: userResponse });
+        
+    } catch (error) {
+        console.error('Google authentication error:', error);
+        res.status(401).json({ message: 'Google authentication failed' });
+    }
+});
+
+// Registration route
+app.post('/api/auth/register', async (req, res) => {
+    try {
+        const { firstName, lastName, email, password, interests } = req.body;
+        
+        // Check if user already exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: 'User already exists with this email' });
+        }
+        
+        // Hash password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        
+        // Create new user
+        const user = new User({
+            firstName,
+            lastName,
+            email,
+            password: hashedPassword,
+            interests,
+            authProvider: 'local'
+        });
+        
+        await user.save();
+        
+        // Create JWT token
+        const token = jwt.sign(
+            { userId: user._id },
+            process.env.JWT_SECRET || 'your_jwt_secret',
+            { expiresIn: '1d' }
+        );
+        
+        // Send response
         res.status(201).json({
             message: 'User registered successfully',
-            user: userData,
-            token
+            token,
+            user: {
+                _id: user._id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                interests: user.interests,
+                authProvider: 'local'
+            }
         });
         
     } catch (error) {
         console.error('Registration error:', error);
-        res.status(500).json({ message: 'Server error during registration' });
+        res.status(500).json({ message: 'Server error' });
     }
 });
 
-// Login User
-app.post('/api/users/login', async (req, res) => {
+// Protected route example
+app.get('/api/user/profile', authenticateToken, async (req, res) => {
     try {
-        // Find user by email
-        const user = await User.findOne({ email: req.body.email });
+        const user = await User.findById(req.userId).select('-password');
         if (!user) {
-            return res.status(401).json({ message: 'Invalid email or password' });
+            return res.status(404).json({ message: 'User not found' });
         }
-        
-        // Validate password
-        const isMatch = await bcrypt.compare(req.body.password, user.password);
-        if (!isMatch) {
-            return res.status(401).json({ message: 'Invalid email or password' });
-        }
-        
-        // Generate JWT token
-        const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '24h' });
-        
-        // Return user data without password
-        const userData = {
-            id: user._id,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            email: user.email,
-            interests: user.interests
-        };
-        
-        res.status(200).json({
-            message: 'Login successful',
-            user: userData,
-            token
-        });
-        
+        res.json(user);
     } catch (error) {
-        console.error('Login error:', error);
-        res.status(500).json({ message: 'Server error during login' });
+        console.error('Profile fetch error:', error);
+        res.status(500).json({ message: 'Server error' });
     }
 });
 
-// Get user profile (protected route)
-app.get('/api/users/profile', auth, async (req, res) => {
+// Middleware to authenticate JWT token
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    
+    if (!token) {
+        return res.status(401).json({ message: 'Access denied. No token provided.' });
+    }
+    
     try {
-        const userData = {
-            id: req.user._id,
-            firstName: req.user.firstName,
-            lastName: req.user.lastName,
-            email: req.user.email,
-            interests: req.user.interests
-        };
-        
-        res.status(200).json({ user: userData });
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your_jwt_secret');
+        req.userId = decoded.userId;
+        next();
     } catch (error) {
-        console.error('Profile error:', error);
-        res.status(500).json({ message: 'Server error fetching profile' });
+        return res.status(403).json({ message: 'Invalid token' });
     }
-});
-
-// Serve HTML files
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'login.html'));
-});
-
-app.get('/signup', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'signup.html'));
-});
-
-app.get('/main', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'main.html'));
-});
+}
 
 // Start server
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
