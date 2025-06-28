@@ -9,12 +9,10 @@
 </head>
 <body>
     <header class="navbar">
-        <!-- Logo -->
         <div class="logo">
             <img src="/assets/logo.png" alt="Immersive Learning Logo">
         </div>
 
-        <!-- Navigation Links -->
         <ul class="nav-links">
             <li><a href="#home">Home</a></li>
             <li><a href="#about">About</a></li>
@@ -22,7 +20,6 @@
             <li><a href="#contact">Contact</a></li>
         </ul>
 
-        <!-- Search Bar with Dropdown Alternative -->
         <div class="search-container">
             <div class="search-bar">
                 <input type="text" id="search-input" placeholder="Search subjects..." onclick="toggleDropdown()">
@@ -43,7 +40,6 @@
             </div>
         </div>
 
-        <!-- Auth Buttons -->
         <div class="auth-buttons">
             <a href="login.html" class="btn btn-outline">Log In</a>
             <a href="signup.html" class="btn btn-primary">Get Started</a>
@@ -51,200 +47,59 @@
     </header>
     
     <!-- Learn Section -->
-<section class="learn-section" id="learn">
-    <div class="container">
-        <div class="section-header">
-            <h2>Learn</h2>
-            <p class="section-subtitle">Expand your knowledge with interactive content</p>
-        </div>
-        
-        <div class="feature-cards">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-book-open"></i>
-                </div>
-                <h3>Interactive Lessons</h3>
-                <p>Dive into subject matter with dynamic content that adapts to your learning style.</p>
-                <a href="#" class="btn btn-secondary">Explore Lessons</a>
+    <section class="learn-section" id="learn">
+        <div class="container">
+            <div class="section-header">
+                <h2>Learn</h2>
+                <p class="section-subtitle">Expand your knowledge with cutting-edge interactive content powered by advanced AI technology</p>
             </div>
             
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-video"></i>
+            <div class="feature-cards">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3>Interactive Lessons</h3>
+                    <p>Dive into subject matter with dynamic content that adapts to your learning style and pace through intelligent algorithms.</p>
+                    <a href="#" class="btn btn-secondary">Explore Lessons</a>
                 </div>
-                <h3>Video Tutorials</h3>
-                <p>Watch expert-led tutorials that break down complex concepts into clear explanations.</p>
-                <a href="#" class="btn btn-secondary">Browse Videos</a>
             </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-puzzle-piece"></i>
-                </div>
-                <h3>Guided Projects</h3>
-                <p>Learn by doing with hands-on projects that reinforce theoretical knowledge.</p>
-                <a href="#" class="btn btn-secondary">Start Projects</a>
-            </div>
-        </div>
-    </div>
-</section>
 
-<!-- Test Section -->
-<section class="test-section" id="test">
-    <div class="container">
-        <div class="section-header">
-            <h2>Test</h2>
-            <p class="section-subtitle">Evaluate your understanding and track progress</p>
-        </div>
-        
-        <div class="assessment-tools">
-            <div class="assessment-card">
-                <div class="assessment-icon">
-                    <i class="fas fa-tasks"></i>
-                </div>
-                <h3>Knowledge Quizzes</h3>
-                <p>Test your understanding with adaptive quizzes that identify knowledge gaps.</p>
-                <div class="difficulty-levels">
-                    <span class="difficulty beginner">Beginner</span>
-                    <span class="difficulty intermediate">Intermediate</span>
-                    <span class="difficulty advanced">Advanced</span>
-                </div>
-                <a href="#" class="btn btn-secondary">Take a Quiz</a>
-            </div>
-            
-            <div class="assessment-card">
-                <div class="assessment-icon">
-                    <i class="fas fa-clipboard-check"></i>
-                </div>
-                <h3>Progress Assessments</h3>
-                <p>Track your improvement over time with comprehensive assessments.</p>
-                <div class="progress-analytics">
-                    <div class="progress-bar">
-                        <div class="progress" style="width: 75%"></div>
+            <!-- AI-Powered Mentoring Subpart -->
+            <div class="ai-mentoring">
+                <h3><i class="fas fa-robot"></i>AI-Powered Practice</h3>
+                <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: 2rem;">Experience personalized learning with our advanced AI mentor that adapts to your unique learning style, tracks your progress, and provides real-time guidance.</p>
+                
+                <div class="ai-features">
+                    <div class="ai-feature">
+                        <i class="fas fa-brain"></i>
+                        <h4>Adaptive Learning Path</h4>
+                        <p>AI analyzes your learning patterns and creates customized curricula tailored to your strengths and areas for improvement.</p>
                     </div>
-                    <span class="progress-text">Average Completion: 75%</span>
                 </div>
-                <a href="#" class="btn btn-secondary">View Assessments</a>
-            </div>
-            
-            <div class="assessment-card">
-                <div class="assessment-icon">
-                    <i class="fas fa-trophy"></i>
-                </div>
-                <h3>Certification Exams</h3>
-                <p>Demonstrate your mastery with recognized certification opportunities.</p>
-                <div class="cert-types">
-                    <span class="cert-badge"><i class="fas fa-medal"></i> Subject Certificates</span>
-                    <span class="cert-badge"><i class="fas fa-award"></i> Course Completion</span>
-                </div>
-                <a href="#" class="btn btn-secondary">Explore Certifications</a>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- Practice Section -->
-<section class="practice-section" id="practice">
-    <div class="container">
-        <div class="section-header">
-            <h2>Practice</h2>
-            <p class="section-subtitle">Apply your knowledge through hands-on activities</p>
-        </div>
-        
-        <div class="practice-options">
-            <div class="practice-category">
-                <div class="practice-header">
-                    <i class="fas fa-vr-cardboard"></i>
-                    <h3>Virtual Labs</h3>
-                </div>
-                <p>Experiment safely in controlled virtual environments across various subjects.</p>
-                <div class="practice-examples">
-                    <div class="example-item">
-                        <i class="fas fa-flask"></i>
-                        <span>Chemistry Lab</span>
-                    </div>
-                    <div class="example-item">
-                        <i class="fas fa-dna"></i>
-                        <span>Biology Lab</span>
-                    </div>
-                    <div class="example-item">
-                        <i class="fas fa-atom"></i>
-                        <span>Physics Lab</span>
-                    </div>
-                </div>
-                <a href="#" class="btn btn-tertiary">Enter Virtual Lab</a>
+    <!-- Test Section -->
+    <section class="test-section" id="test">
+        <div class="container">
+            <div class="section-header">
+                <h2>Test</h2>
+                <p class="section-subtitle">Evaluate your understanding and track progress with comprehensive assessment tools and advanced analytics</p>
             </div>
             
-            <div class="practice-category">
-                <div class="practice-header">
-                    <i class="fas fa-users"></i>
-                    <h3>Group Activities</h3>
+            <div class="assessment-tools">
+                <div class="assessment-card">
+                    <div class="assessment-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <h3>Knowledge Quizzes</h3>
+                    <p>Test your understanding with adaptive quizzes that identify knowledge gaps and adjust difficulty in real-time based on your performance.</p>
+                    <div class="difficulty-levels">
+                        <span class="difficulty beginner">Beginner</span>
+                        <span class="difficulty intermediate">Intermediate</span>
+                        <span class="difficulty advanced">Advanced</span>
+                    </div>
+                    <a href="#" class="btn btn-secondary">Take a Quiz</a>
                 </div>
-                <p>Collaborate with peers on problem-solving and team challenges.</p>
-                <div class="activity-schedule">
-                    <div class="schedule-item">
-                        <span class="schedule-day">Mon-Wed</span>
-                        <span class="schedule-activity">Problem-Solving Workshops</span>
-                    </div>
-                    <div class="schedule-item">
-                        <span class="schedule-day">Thu-Fri</span>
-                        <span class="schedule-activity">Team Challenges</span>
-                    </div>
-                    <div class="schedule-item">
-                        <span class="schedule-day">Weekends</span>
-                        <span class="schedule-activity">Open Forums</span>
-                    </div>
-                </div>
-                <a href="#" class="btn btn-tertiary">Join Activities</a>
-            </div>
-            
-            <div class="practice-category">
-                <div class="practice-header">
-                    <i class="fas fa-gamepad"></i>
-                    <h3>Learning Games</h3>
-                </div>
-                <p>Reinforce concepts through engaging educational games and simulations.</p>
-                <div class="game-highlights">
-                    <div class="game-stats">
-                        <span class="stat-number">50+</span>
-                        <span class="stat-label">Educational Games</span>
-                    </div>
-                    <div class="game-stats">
-                        <span class="stat-number">10</span>
-                        <span class="stat-label">Difficulty Levels</span>
-                    </div>
-                    <div class="game-stats">
-                        <span class="stat-number">5</span>
-                        <span class="stat-label">Game Modes</span>
-                    </div>
-                </div>
-                <a href="#" class="btn btn-tertiary">Play & Learn</a>
-            </div>
-        </div>
-    </div>
-</section>
-
-    <!-- Connect With Us Section -->
-    <div class="connect-with-us" id="contact">
-        <div class="connect-title">
-            <span></span>
-            <h2>Connect With Us</h2>
-            <span></span>
-        </div>
-        <div class="social-icons">
-            <a href="https://discord.com/channels/@me" title="Discord"><i class="fab fa-discord"></i></a>
-            <a href="#"><i class="fab fa-facebook" title="Facebook"></i></a>
-            <a href="https://www.instagram.com/immersive__learn/" title="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.linkedin.com/in/immersive-learning-814491356/" title="Linkedin"><i class="fab fa-linkedin"></i></a>
-            <a href="https://www.pinterest.com/immersivelearning2025/" title="Pinkerest"><i class="fab fa-pinterest"></i></a>
-            <a href="https://x.com/learning__hub" title="Twitter"><i class="fab fa-x-twitter"></i></a>
-        </div>
-    </div>
-
-    <footer>
-        <div class="footer-container">
-            <p class="copyright">Copyright © 2025 Immersive Learning - All Rights Reserved.</p>
-        </div>
-    </footer>
-    </body>
-    </html>
