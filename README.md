@@ -1,2 +1,5 @@
-# Immersive-Learning-Platform
-This Immersive Learning platform has a cutting-edge, interactive approach to language education. A unique combination of 3D environments and advanced speech recognition technology ensures that students have an engaging and effective learning experience.
+# 3Ducate - Immersive-Learning-Platform
+ • Developed an interactive web platform called "3Ducate," which promotes experiential learning through
+ interactive 3-D models.
+ • Implemented voice-driven lessons and quizzes using the Web Speech API that provide instant feedback, and NLP
+ for conversation, helping users interact naturally.
